@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "e:/bzbs/C",
-      "program": "e:/bzbs/C/build/Debug/outDebug",
+      "cwd": "e:/bzbs/c/Getränkeautomat",
+      "program": "e:/bzbs/c/Getränkeautomat/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
