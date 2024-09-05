@@ -1,4 +1,10 @@
-/* Getraenke Automat Version 0.3 */
+/*  
+Projekt:    Getraenke Automat Version 0.3
+Autor:      Michael Good
+Datum:      05.09.2024
+Version:    0.3
+Kontakt:    michael.good@outlook.com
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
