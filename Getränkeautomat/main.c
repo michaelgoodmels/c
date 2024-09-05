@@ -1,5 +1,9 @@
 /* Getraenke Automat Version 0.3 */
 
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
 printf("Getraenke Automat v0.3\n\n");
 
 // Auswahl der Getraenke
@@ -46,3 +50,4 @@ for(i=0; i < menge; i++)  {
 }
 
 printf("\n\nVielen Dank, bitte entnehmen sie ihre Getraenke.\n");
+}
