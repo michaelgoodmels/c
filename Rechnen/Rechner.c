@@ -10,7 +10,7 @@ Kontakt:    michael.good@outlook.com
 #include <stdio.h>
 #include <math.h>
 
-
+//Typendefinition "Struct"
 typedef struct {
     double (*add)(double, double);
     double (*subtract)(double, double);
@@ -18,24 +18,16 @@ typedef struct {
     double (*divide)(double, double);
 } Calculator;
 
-//Fuktionsprototyping
-double add();
-double subtract();
-double multiply();
-double divide();
+//Funktionsprototying
+double add(double a, double b);
+double subtract(double a, double b);
+double multiply(double a, double b);
+double divide(double a, double b);
+Calculator init_calculator(void);
 
-// Initialisieren des Taschenrechners
-Calculator init_calculator() {
-    Calculator calc;
-    calc.add = add;
-    calc.subtract = subtract;
-    calc.multiply = multiply;
-    calc.divide = divide;
-    return calc;
-}
-
-// Hauptprogramm
+//Hauptprogramm
 int main() {
+
     //globale Variablen
     Calculator calc = init_calculator();
     double a, b;
@@ -51,7 +43,7 @@ int main() {
     printf("Wählen Sie eine Operation (+, -, *, /): ");
     scanf(" %c", &operation);
 
-    // Auswahl Operationen
+    //Auswahl Operation
     switch (operation) {
         //Addition
         case '+':
@@ -65,31 +57,40 @@ int main() {
         case '*':
             printf("Ergebnis: %.2lf\n", calc.multiply(a, b));
         break;
-        //Divsion
+        //Division
         case '/':
             printf("Ergebnis: %.2lf\n", calc.divide(a, b));
         break;
-        //Ungültig
+        //ungültig
         default:
             printf("Ungültige Operation!\n");
     }
-
     return 0;
 }
 
 // Funktionsaufrufe
+//
+Calculator init_calculator() {
+    Calculator calc;
+    calc.add = add;
+    calc.subtract = subtract;
+    calc.multiply = multiply;
+    calc.divide = divide;
+    return calc;
+}
+//Addition
 double add(double a, double b) {
     return a + b;
 }
-
+//Subtraktion
 double subtract(double a, double b){
     return a - b;
 }
-
+//Multiplikation
 double multiply(double a, double b){
     return a * b;
 }
-
+//Division
 double divide(double a, double b){
     if (b != 0) {
         return a / b;
