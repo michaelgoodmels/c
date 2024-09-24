@@ -2,7 +2,7 @@
 Projekt:    Rechner
 Autor:      Michael Good
 Datum:      05.09.2024
-Version:    0.3
+Version:    0.1
 Kontakt:    michael.good@outlook.com
 */
 
@@ -69,7 +69,7 @@ int main() {
 }
 
 //Funktionsaufrufe
-//Struct
+//Struct Datentyp in Struktur
 Calculator init_calculator() {
     Calculator calc;
     calc.add = add;
