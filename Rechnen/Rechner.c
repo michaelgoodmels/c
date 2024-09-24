@@ -6,7 +6,9 @@ Version:    0.3
 Kontakt:    michael.good@outlook.com
 */
 
+//Includes
 #include <stdio.h>
+#include <math.h>
 
 // Definition der Taschenrechner-Klasse (struct)
 typedef struct {
@@ -50,10 +52,12 @@ Calculator init_calculator() {
 
 // Hauptprogramm
 int main() {
+    //globale Variablen
     Calculator calc = init_calculator();
     double a, b;
     char operation;
 
+    //Ausgabe/Eingabeanforderung
     printf("Geben Sie die erste Zahl ein: ");
     scanf("%lf", &a);
 
@@ -63,19 +67,25 @@ int main() {
     printf("Wählen Sie eine Operation (+, -, *, /): ");
     scanf(" %c", &operation);
 
+    // Auswahl Operationen
     switch (operation) {
+        //Addition
         case '+':
             printf("Ergebnis: %.2lf\n", calc.add(a, b));
         break;
+        //Subtraktion
         case '-':
             printf("Ergebnis: %.2lf\n", calc.subtract(a, b));
         break;
+        //Multiplikation
         case '*':
             printf("Ergebnis: %.2lf\n", calc.multiply(a, b));
         break;
+        //Divsion
         case '/':
             printf("Ergebnis: %.2lf\n", calc.divide(a, b));
         break;
+        //Ungültig
         default:
             printf("Ungültige Operation!\n");
     }
