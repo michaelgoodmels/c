@@ -68,8 +68,8 @@ int main() {
     return 0;
 }
 
-// Funktionsaufrufe
-//
+//Funktionsaufrufe
+//Struct
 Calculator init_calculator() {
     Calculator calc;
     calc.add = add;
