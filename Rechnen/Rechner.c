@@ -10,7 +10,7 @@ Kontakt:    michael.good@outlook.com
 #include <stdio.h>
 #include <math.h>
 
-// Definition der Taschenrechner-Klasse (struct)
+
 typedef struct {
     double (*add)(double, double);
     double (*subtract)(double, double);
@@ -18,27 +18,11 @@ typedef struct {
     double (*divide)(double, double);
 } Calculator;
 
-// Funktionen für die Operationen
-double add(double a, double b) {
-    return a + b;
-}
-
-double subtract(double a, double b) {
-    return a - b;
-}
-
-double multiply(double a, double b) {
-    return a * b;
-}
-
-double divide(double a, double b) {
-    if (b != 0) {
-        return a / b;
-    } else {
-        printf("Fehler: Division durch Null!\n");
-        return 0;
-    }
-}
+//Fuktionsprototyping
+double add();
+double subtract();
+double multiply();
+double divide();
 
 // Initialisieren des Taschenrechners
 Calculator init_calculator() {
@@ -91,4 +75,26 @@ int main() {
     }
 
     return 0;
+}
+
+// Funktionsaufrufe
+double add(double a, double b) {
+    return a + b;
+}
+
+double subtract(double a, double b){
+    return a - b;
+}
+
+double multiply(double a, double b){
+    return a * b;
+}
+
+double divide(double a, double b){
+    if (b != 0) {
+        return a / b;
+    } else {
+        printf("Fehler: Division durch Null!\n");
+        return 0;
+    }
 }
