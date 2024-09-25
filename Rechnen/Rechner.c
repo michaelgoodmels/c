@@ -10,7 +10,7 @@ Kontakt:    michael.good@outlook.com
 #include <stdio.h>
 #include <math.h>
 
-//Typendefinition "Struct"
+//Typendefinition "Struct" mit Pointer
 typedef struct {
     double (*add)(double, double);
     double (*subtract)(double, double);
@@ -70,7 +70,8 @@ int main() {
 
 //Funktionsaufrufe
 //Struct Datentyp in Struktur
-Calculator init_calculator() {
+//Die Funktion init_calculator initialisiert die Funktionszeiger und gibt eine Calculator-Instanz zurück.
+ Calculator init_calculator() {
     Calculator calc;
     calc.add = add;
     calc.subtract = subtract;
