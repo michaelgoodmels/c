@@ -17,25 +17,25 @@ int main() {
     double weight, height, bmi;
     int age;
 
-    // Eingabe von Gewicht, Größe und Alter
+    //Eingabe von Gewicht, Groesse und Alter
     get_input(&weight, &height, &age);
 
-    // BMI berechnen
+    //BMI berechnen
     bmi = calculate_bmi(weight, height);
 
     // BMI bewerten und Ausgabe
-    printf("Ihr BMI beträgt: %.2lf\n", bmi);
+    printf("Ihr BMI betraegt: %.2lf\n", bmi);
     evaluate_bmi(bmi, age);
 
     return 0;
 }
 
-// Funktion zur Berechnung des BMI
+//Funktion zur Berechnung des BMI
 double calculate_bmi(double weight, double height) {
     return weight / (height * height);
 }
 
-// Funktion zur Bewertung des BMI basierend auf Alter und BMI
+//Funktion zur Bewertung des BMI basierend auf Alter und BMI
 void evaluate_bmi(double bmi, int age) {
     if (age < 18) {
         printf("Für Kinder und Jugendliche gelten andere BMI-Kriterien. Bitte einen Arzt konsultieren.\n");
@@ -47,7 +47,7 @@ void evaluate_bmi(double bmi, int age) {
     } else if (bmi >= 18.5 && bmi < 24.9) {
         printf("Ihr Gewicht ist normal.\n");
     } else if (bmi >= 25.0 && bmi < 29.9) {
-        printf("Sie haben Übergewicht.\n");
+        printf("Sie haben uebergewicht.\n");
     } else if (bmi >= 30.0 && bmi < 34.9) {
         printf("Sie haben Adipositas (Grad 1).\n");
     } else if (bmi >= 35.0 && bmi < 39.9) {
@@ -57,7 +57,7 @@ void evaluate_bmi(double bmi, int age) {
     }
 
     if (age >= 65 && bmi >= 25.0 && bmi <= 29.9) {
-        printf("Für ältere Menschen ist ein höherer BMI oft vorteilhaft.\n");
+        printf("Für aeltere Menschen ist ein hoeherer BMI oft vorteilhaft.\n");
     }
 }
 
@@ -66,7 +66,7 @@ void get_input(double* weight, double* height, int* age) {
     printf("Geben Sie Ihr Gewicht in Kilogramm ein: ");
     scanf("%lf", weight);
 
-    printf("Geben Sie Ihre Größe in Metern ein (z.B. 1.75): ");
+    printf("Geben Sie Ihre Groesse in Metern ein (z.B. 1.75): ");
     scanf("%lf", height);
 
     printf("Geben Sie Ihr Alter ein: ");
