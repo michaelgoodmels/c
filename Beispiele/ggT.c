@@ -1,3 +1,11 @@
+/*
+Projekt:    ggt
+Autor:      Michael Good
+Datum:      05.09.2024
+Version:    0.1
+Kontakt:    michael.good@outlook.com
+*/
+
 #include <stdio.h>
 
 // Funktion, um den GGT mithilfe des euklidischen Algorithmus zu finden
