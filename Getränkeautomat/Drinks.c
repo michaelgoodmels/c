@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 // Struktur, die ein Getränk repräsentiert
 struct Drink {
@@ -7,57 +8,18 @@ struct Drink {
     int quantity;
 };
 
-// Funktion, um den Getränkeautomatenstatus anzuzeigen
-void displayStatus(struct Drink vendingMachine[], int numDrinks) {
-    printf("\nGetränkeautomatenstatus:\n");
-    for (int i = 0; i < numDrinks; ++i) {
-        printf("%d. %s - %.2f Euro - Verfügbar: %d\n", i + 1, vendingMachine[i].name, vendingMachine[i].price, vendingMachine[i].quantity);
-    }
-    printf("\n");
-}
+// Zustände des Getränkeautomaten
+typedef enum {
+    STATE_MENU,
+    STATE_INSERT_MONEY,
+    STATE_SELECT_DRINK,
+    STATE_DISPLAY_STATUS,
+    STATE_EXIT
+} VendingState;
 
-// Funktion zum Auswählen und Kaufen eines Getränks
-void selectDrink(struct Drink vendingMachine[], int numDrinks, float *balance) {
-    int choice;
-
-    // Anzeige der verfügbaren Getränke
-    displayStatus(vendingMachine, numDrinks);
-
-    // Auswahl des Getränks
-    printf("Wählen Sie ein Getränk (1-%d): ", numDrinks);
-    scanf("%d", &choice);
-
-    // Überprüfung der gültigen Auswahl
-    if (choice < 1 || choice > numDrinks) {
-        printf("Ungültige Auswahl.\n");
-        return;
-    }
-
-    // Überprüfung, ob das ausgewählte Getränk verfügbar ist
-    if (vendingMachine[choice - 1].quantity == 0) {
-        printf("Dieses Getränk ist ausverkauft.\n");
-        return;
-    }
-
-    // Überprüfung des Guthabens
-    if (*balance < vendingMachine[choice - 1].price) {
-        printf("Nicht genug Guthaben. Bitte mehr Geld einwerfen.\n");
-        return;
-    }
-
-    // Kauf erfolgreich
-    printf("Vielen Dank! Sie haben %s gekauft.\n", vendingMachine[choice - 1].name);
-
-    // Reduzieren Sie die Menge des gekauften Getränks
-    vendingMachine[choice - 1].quantity--;
-
-    // Reduzieren Sie das Guthaben um den Preis des gekauften Getränks
-    *balance -= vendingMachine[choice - 1].price;
-}
-
-int main() {
-    // Initialisierung des Getränkeautomaten mit 6 Getränken
-    struct Drink vendingMachine[6] = {
+// Initialisiere Getränke
+void initializeDrinks(struct Drink vendingMachine[], int size) {
+    struct Drink initDrinks[6] = {
         {"Cola", 1.50, 5},
         {"Wasser", 1.00, 10},
         {"Fanta", 1.30, 3},
@@ -65,46 +27,117 @@ int main() {
         {"Eistee", 2.00, 4},
         {"Kaffee", 1.80, 6}
     };
+    for (int i = 0; i < size; ++i) {
+        vendingMachine[i] = initDrinks[i];
+    }
+}
 
-    float balance = 0.0; // Initialisiertes Guthaben
+// Funktion, um den Getränkeautomatenstatus anzuzeigen
+void displayStatus(struct Drink vendingMachine[], int numDrinks) {
+    printf("\n--- Getränkeautomatenstatus ---\n");
+    for (int i = 0; i < numDrinks; ++i) {
+        printf("%d. %s - %.2f Euro - Verfügbar: %d\n",
+               i + 1,
+               vendingMachine[i].name,
+               vendingMachine[i].price,
+               vendingMachine[i].quantity);
+    }
+    printf("-------------------------------\n");
+}
 
+// Funktion zum Einwerfen von Geld
+void insertMoney(float *balance) {
+    float amount;
+    printf("Guthaben einwerfen (in Euro): ");
+    scanf("%f", &amount);
+    if (amount > 0) {
+        *balance += amount;
+        printf("Neues Guthaben: %.2f Euro\n", *balance);
+    } else {
+        printf("Ungültiger Betrag.\n");
+    }
+}
+
+// Funktion zum Auswählen und Kaufen eines Getränks
+void selectDrink(struct Drink vendingMachine[], int numDrinks, float *balance) {
     int choice;
-    do {
-        // Menü anzeigen
-        printf("\nMenü:\n");
-        printf("1. Guthaben einwerfen\n");
-        printf("2. Getränk auswählen\n");
-        printf("3. Getränkeautomatenstatus anzeigen\n");
-        printf("4. Beenden\n");
-        printf("Ihre Wahl: ");
-        scanf("%d", &choice);
+    displayStatus(vendingMachine, numDrinks);
+    printf("Wählen Sie ein Getränk (1-%d): ", numDrinks);
+    scanf("%d", &choice);
 
-        switch (choice) {
-            case 1:
-                // Guthaben einwerfen
-                printf("Guthaben einwerfen (in Euro): ");
-                float amount;
-                scanf("%f", &amount);
-                balance += amount;
-                printf("Neues Guthaben: %.2f Euro\n", balance);
+    if (choice < 1 || choice > numDrinks) {
+        printf("Ungültige Auswahl.\n");
+        return;
+    }
+
+    struct Drink *selected = &vendingMachine[choice - 1];
+
+    if (selected->quantity == 0) {
+        printf("Dieses Getränk ist ausverkauft.\n");
+        return;
+    }
+
+    if (*balance < selected->price) {
+        printf("Nicht genug Guthaben. Bitte mehr Geld einwerfen.\n");
+        return;
+    }
+
+    selected->quantity--;
+    *balance -= selected->price;
+    printf("Vielen Dank! Sie haben %s gekauft.\n", selected->name);
+}
+
+// Menü anzeigen und Zustand bestimmen
+VendingState displayMenu() {
+    int choice;
+    printf("\n--- Menü ---\n");
+    printf("1. Guthaben einwerfen\n");
+    printf("2. Getränk auswählen\n");
+    printf("3. Automatenstatus anzeigen\n");
+    printf("4. Beenden\n");
+    printf("Ihre Wahl: ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1: return STATE_INSERT_MONEY;
+        case 2: return STATE_SELECT_DRINK;
+        case 3: return STATE_DISPLAY_STATUS;
+        case 4: return STATE_EXIT;
+        default:
+            printf("Ungültige Auswahl.\n");
+            return STATE_MENU;
+    }
+}
+
+int main() {
+    struct Drink vendingMachine[6];
+    initializeDrinks(vendingMachine, 6);
+
+    float balance = 0.0f;
+    VendingState state = STATE_MENU;
+
+    while (state != STATE_EXIT) {
+        switch (state) {
+            case STATE_MENU:
+                state = displayMenu();
                 break;
-            case 2:
-                // Getränk auswählen und kaufen
+            case STATE_INSERT_MONEY:
+                insertMoney(&balance);
+                state = STATE_MENU;
+                break;
+            case STATE_SELECT_DRINK:
                 selectDrink(vendingMachine, 6, &balance);
+                state = STATE_MENU;
                 break;
-            case 3:
-                // Getränkeautomatenstatus anzeigen
+            case STATE_DISPLAY_STATUS:
                 displayStatus(vendingMachine, 6);
-                break;
-            case 4:
-                // Beenden
-                printf("Programm wird beendet.\n");
+                state = STATE_MENU;
                 break;
             default:
-                printf("Ungültige Auswahl. Bitte versuchen Sie es erneut.\n");
+                state = STATE_MENU;
         }
+    }
 
-    } while (choice != 4);
-
+    printf("Programm wird beendet.\n");
     return 0;
 }
