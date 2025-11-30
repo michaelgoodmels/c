@@ -1,5 +1,5 @@
 /*
-Projekt:    Wochentemperatur Array
+Projekt:    Wochentemperatur Array "Mittelwert" / "Median"
 Autor:      Michael Good
 Datum:      29.11.2025
 Version:    0.1
