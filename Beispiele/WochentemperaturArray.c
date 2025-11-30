@@ -19,7 +19,8 @@ int main() {
 
     float durchschnitt = summe / 7;
 
-    printf("Durchschnittstemperatur der Woche: %.2f°C\n", durchschnitt);
+    printf("\nDurchschnitt: %.2f %cC\n", durchschnitt, 248);
+
 
     return 0;
 }
